@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    overflow: hidden;
+}
+header{
+    height: 10vh;
+}
+.hero{
+    background-color: #008854;
+    width: 100%;
+    height: 30vh;
+}
+.gameMenu{
+    width: 100%;
+    height: 40vh;
+    display: grid;
+    grid-template-columns: 40vw 40vw;
+    gap: 20vw;
+    align-items: center;
+    position: relative; 
+}
+.newGame{
+    display: flex;
+    justify-content: right;
+}
+.newGame button{
+   width: 35vw;
+    height: 10vh;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+     
+    
+}
+.loadGame{
+    display: flex;
+    justify-content: left;
+}
+.loadGame button{
+    width: 35vw;
+    height: 10vh;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+}
+#rules img{
+    position: absolute;
+    top: 5vh;
+    right: 5vw;
+    color: red;
+    width: 32px;
+    height: 32px;
+}
