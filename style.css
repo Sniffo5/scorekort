@@ -1,9 +1,15 @@
 *{
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+main{
+    background-color: #F9FAF9;
 }
 header{
     height: 10vh;
+    background-color: #8cbef0;
+    color: black;
 }
 .hero{
     background-color: #008854;
@@ -50,11 +56,24 @@ header{
     cursor: pointer;
 
 }
-#rules img{
+#rules img {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+    transition: transform 0.2s;
+}
+#rules {
     position: absolute;
-    top: 5vh;
+    bottom: 5vh;
     right: 5vw;
-    color: red;
-    width: 32px;
-    height: 32px;
+    background-color: #ECEFF1; /* Modern violet */
+    border-radius: 50%;
+    padding: 16px;
+    cursor: pointer;
+}
+.nameForm input{
+    width: 100%;
+    height: 10vh;
+    padding-left: 5vw;
+    font-size: 30px;
 }
