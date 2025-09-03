@@ -77,3 +77,9 @@ header{
     padding-left: 5vw;
     font-size: 30px;
 }
+.gameBtn{
+    width: 45%;
+    height: 10vh;
+    font-size: 25px;
+    margin: 2.5%;
+}
