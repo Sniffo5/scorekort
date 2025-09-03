@@ -114,9 +114,6 @@ function generateStartHtml(){
 
     startGame.addEventListener('click', function() {
 
-
-        
-        
     let players = [];
     const inputs = form.querySelectorAll('input[name="playerName"]');
 
