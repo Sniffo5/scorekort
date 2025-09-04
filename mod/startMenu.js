@@ -18,7 +18,7 @@ function generateStartHtml(){
     form.appendChild(input);
     main.appendChild(form);
 
-    // Add event listeners to the first input so it updates the hero section
+    
     const firstPlayerId = 'player1';
     input.addEventListener('input', function(event) {
         const playerName = event.target.value;
