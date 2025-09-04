@@ -9,7 +9,7 @@ function loadGameScore() {
     const saved = localStorage.getItem('currentGame');
     if (saved) {
         gameScore = JSON.parse(saved);
-        
+
         document.querySelector('.mainContent').innerHTML = '';
         document.querySelector('.hero').innerHTML = '';
         genCourtHtml(courtData);
@@ -29,7 +29,7 @@ function startNewGame(players) {
         hero.innerHTML = '';
 
         for (let i = 0; i < players.length; i++) {
-            gameScore[players[i]] = { name: players[i], scores: []};
+            gameScore[players[i]] = { name: players[i], scores: [] };
 
             for (let j = 0; j < courtData.length; j++) {
                 gameScore[players[i]].scores.push(0);
@@ -40,9 +40,9 @@ function startNewGame(players) {
         console.log(gameScore);
         genCourtHtml(courtData);
         genControlHtml();
-    }   
+    }
 }
-function genCourtHtml(courtData){
+function genCourtHtml(courtData) {
     let mainContent = document.querySelector('.mainContent');
     let hero = document.querySelector('.hero');
     mainContent.innerHTML = '';
@@ -88,7 +88,7 @@ function genCourtHtml(courtData){
             scoreSelectorList.appendChild(pad);
         }
 
-        
+
         for (let i = 0; i <= 9; i++) {
             let scoreBtn = document.createElement('li');
             scoreBtn.className = 'scoreBtn';
@@ -108,7 +108,7 @@ function genCourtHtml(courtData){
         scoreSelectorContainer.appendChild(playerSection);
 
         scoreSelectorList.querySelectorAll('.scoreBtn').forEach((btn, idx) => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 if (btn.classList.contains('pad')) return;
                 let itemHeight = btn.offsetHeight;
                 scoreSelectorList.scrollTo({ top: (idx - padCount) * itemHeight, behavior: 'smooth' });
@@ -124,7 +124,7 @@ function genCourtHtml(courtData){
 
     mainContent.appendChild(scoreSelectorContainer);
 
-    
+
     for (let player in gameScore) {
         if (player === "currentCourt") continue;
 
@@ -148,7 +148,7 @@ function genCourtHtml(courtData){
 }
 
 
-function genControlHtml(){
+function genControlHtml() {
     let mainContent = document.querySelector('.mainContent');
 
     let nextCourtBtn = document.createElement('button');
@@ -165,7 +165,7 @@ function genControlHtml(){
     previousCourtBtn.appendChild(previousCourtIcon);
     mainContent.appendChild(previousCourtBtn);
     mainContent.appendChild(nextCourtBtn);
-    nextCourtBtn.addEventListener('click', function() {
+    nextCourtBtn.addEventListener('click', function () {
         for (let player in gameScore) {
             if (player === "currentCourt") continue;
             let scoreSelector = document.getElementById(`scoreSelector-${player}`);
@@ -173,7 +173,7 @@ function genControlHtml(){
             let score = selectedBtn.textContent;
             gameScore[player].scores[gameScore.currentCourt] = score;
         }
-        
+
         if (gameScore.currentCourt < courtData.length - 1) {
             gameScore.currentCourt++;
         } else {
@@ -184,7 +184,7 @@ function genControlHtml(){
         genControlHtml();
         console.log(gameScore);
     });
-    previousCourtBtn.addEventListener('click', function() {
+    previousCourtBtn.addEventListener('click', function () {
         for (let player in gameScore) {
             if (player === "currentCourt") continue;
             let scoreSelector = document.getElementById(`scoreSelector-${player}`);
@@ -192,7 +192,7 @@ function genControlHtml(){
             let score = selectedBtn.textContent;
             gameScore[player].scores[gameScore.currentCourt] = score;
         }
-      
+
         if (gameScore.currentCourt > 0) {
             gameScore.currentCourt--;
         } else {
@@ -203,14 +203,14 @@ function genControlHtml(){
         genControlHtml();
         console.log(gameScore);
     });
-    
-    
+
+
 };
 
 
-function tallyScore(){
+function tallyScore() {
 
 }
 
 
-export {startNewGame, loadGameScore};
+export { startNewGame, loadGameScore };

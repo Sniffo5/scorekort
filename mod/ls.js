@@ -3,4 +3,4 @@ function storePlayers(players) {
 }
 
 
-export {storePlayers};
+export { storePlayers };

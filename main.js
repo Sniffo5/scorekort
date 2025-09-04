@@ -1,16 +1,16 @@
-import {startHtmlGeneration} from './mod/startMenu.js';
-import {startNewGame, loadGameScore} from './mod/startGame.js';
+import { startHtmlGeneration } from './mod/startMenu.js';
+import { startNewGame, loadGameScore } from './mod/startGame.js';
 
-document.getElementById('newGame').addEventListener('click', function() {
+document.getElementById('newGame').addEventListener('click', function () {
     startHtmlGeneration();
 });
 
 const loadGameBtn = document.getElementById('loadGame');
-    if (loadGameBtn) {
-        loadGameBtn.onclick = function() {
-            loadGameScore();
-        };
-    }
+if (loadGameBtn) {
+    loadGameBtn.onclick = function () {
+        loadGameScore();
+    };
+}
 
 async function getInfo() {
 
@@ -29,7 +29,6 @@ async function getInfo() {
 let infoData = await getInfo();
 let courtData = infoData.court;
 
-
 console.log(courtData);
 
-export {courtData};
+export { courtData };
