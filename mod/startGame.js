@@ -120,6 +120,9 @@ function genCourtHtml(courtData) {
                 saveGameScore();
             });
         });
+         /* fixa att välja poäng med att skrolla */
+
+
     }
 
     mainContent.appendChild(scoreSelectorContainer);
