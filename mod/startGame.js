@@ -46,6 +46,7 @@ function genCourtHtml(courtData) {
     let mainContent = document.querySelector('.mainContent');
     let hero = document.querySelector('.hero');
     mainContent.innerHTML = '';
+    hero.innerHTML = '';
 
     let courtDiv = document.createElement('div');
     courtDiv.className = 'court';
@@ -54,7 +55,7 @@ function genCourtHtml(courtData) {
         <p>Par: ${courtData[gameScore.currentCourt].par}</p>
         <p>Info: ${courtData[gameScore.currentCourt].info}</p>
     `;
-    mainContent.appendChild(courtDiv);
+    hero.appendChild(courtDiv);
 
     let scoreSelectorContainer = document.createElement('div');
     scoreSelectorContainer.className = 'scoreSelectorContainer';
@@ -120,7 +121,20 @@ function genCourtHtml(courtData) {
                 saveGameScore();
             });
         });
-         /* fixa att välja poäng med att skrolla */
+
+
+        scoreSelectorList.addEventListener('scroll', function () {
+            let scrollTop = scoreSelectorList.scrollTop;
+            let itemHeight = scoreSelectorList.children[padCount].offsetHeight;
+            let index = Math.round(scrollTop / itemHeight) + padCount;
+            scoreSelectorList.querySelectorAll('.scoreBtn').forEach(b => b.classList.remove('selected'));
+            let btn = scoreSelectorList.children[index];
+            if (btn && !btn.classList.contains('pad')) {
+                btn.classList.add('selected');
+                gameScore[player].scores[gameScore.currentCourt] = parseInt(btn.textContent, 10);
+                saveGameScore();
+            }
+        });
 
 
     }
@@ -176,6 +190,7 @@ function genControlHtml() {
             let score = selectedBtn.textContent;
             gameScore[player].scores[gameScore.currentCourt] = score;
         }
+          showGameScore();
 
         if (gameScore.currentCourt < courtData.length - 1) {
             gameScore.currentCourt++;
@@ -211,9 +226,41 @@ function genControlHtml() {
 };
 
 
-function tallyScore() {
+function showGameScore() {
+    let existingScoreHtml = document.querySelector('.gameScoreHtml');
+    if (existingScoreHtml) existingScoreHtml.remove();
+    
+    let gameScoreHtml = document.createElement('div');
+    gameScoreHtml.className = 'gameScoreHtml';
 
-}
+    
+    let scores = [];
+    for (let player in gameScore) {
+
+      if (player !== "currentCourt"){
+        let score = 0;
+        for (let i = 0; i < gameScore.currentCourt+1; i++) {
+            
+            score += Number(gameScore[player].scores[i]);
+        }
+        scores.push({ name: player, score: score });
+        } 
+    }
+    scores.sort((a, b) => a.score - b.score);
+
+    let scoreList = document.createElement('ul');
+    scoreList.className = 'scoreList';
+    scores.forEach(s => {
+        let li = document.createElement('li');
+        li.textContent = `${s.name}: ${s.score}`;
+        scoreList.appendChild(li);
+    });
+    gameScoreHtml.appendChild(scoreList);
+    let hero = document.querySelector('.hero');
+    let body = document.querySelector('body');
+    body.insertBefore(gameScoreHtml, hero);
+
+};
 
 
 export { startNewGame, loadGameScore };
