@@ -40,6 +40,7 @@ function startNewGame(players) {
         console.log(gameScore);
         genCourtHtml(courtData);
         genControlHtml();
+        createCourtSelector();
     }
 }
 function genCourtHtml(courtData) {
@@ -124,6 +125,7 @@ function genCourtHtml(courtData) {
 
 
         scoreSelectorList.addEventListener('scroll', function () {
+
             let scrollTop = scoreSelectorList.scrollTop;
             let itemHeight = scoreSelectorList.children[padCount].offsetHeight;
             let index = Math.round(scrollTop / itemHeight) + padCount;
@@ -190,7 +192,7 @@ function genControlHtml() {
             let score = selectedBtn.textContent;
             gameScore[player].scores[gameScore.currentCourt] = score;
         }
-          showGameScore();
+          
 
         if (gameScore.currentCourt < courtData.length - 1) {
             gameScore.currentCourt++;
@@ -200,7 +202,8 @@ function genControlHtml() {
         saveGameScore();
         genCourtHtml(courtData);
         genControlHtml();
-        console.log(gameScore);
+        showGameScore();
+        createCourtSelector();
     });
     previousCourtBtn.addEventListener('click', function () {
         for (let player in gameScore) {
@@ -219,7 +222,9 @@ function genControlHtml() {
         saveGameScore();
         genCourtHtml(courtData);
         genControlHtml();
-        console.log(gameScore);
+        showGameScore();
+        createCourtSelector();
+        
     });
 
 
@@ -239,8 +244,10 @@ function showGameScore() {
 
       if (player !== "currentCourt"){
         let score = 0;
-        for (let i = 0; i < gameScore.currentCourt+1; i++) {
+        for (let i = 0; i < gameScore[player].scores.length; i++) {
             
+            if (gameScore[player].scores[i] !== 0 || gameScore[player].scores[i] !== undefined || gameScore[player].scores[i] !== null)
+
             score += Number(gameScore[player].scores[i]);
         }
         scores.push({ name: player, score: score });
@@ -261,6 +268,52 @@ function showGameScore() {
     body.insertBefore(gameScoreHtml, hero);
 
 };
+
+function createCourtSelector(){
+    let mainContent = document.querySelector('.mainContent');
+    let courtSelector = document.createElement('div');
+    courtSelector.className = 'courtSelector';
+    mainContent.appendChild(courtSelector);
+
+    const playerCount = Object.keys(gameScore).filter(p => p !== "currentCourt").length;
+
+    for (let i = 0; i < courtData.length; i++) {
+        let courtBtn = document.createElement('button');
+        courtBtn.className = 'courtBtn';
+
+        let playersOnCourt = 0;
+        for (let player in gameScore) {
+            if (player !== "currentCourt" && gameScore[player].scores[i] != 0){
+                playersOnCourt++;
+            }
+        }
+
+        if (playersOnCourt > 0 && playersOnCourt < playerCount){
+            courtBtn.classList.add('uncomplete');
+        }
+        if (playersOnCourt === playerCount){
+            courtBtn.classList.add('played');
+        }
+
+        courtBtn.setAttribute('data-court-index', i);
+        courtBtn.textContent = courtData[i].id;
+        if (i === gameScore.currentCourt) {
+            courtBtn.classList.add('currentCourt');
+        }
+        courtSelector.appendChild(courtBtn);
+
+        courtBtn.addEventListener('click', function () {
+            let index = parseInt(courtBtn.getAttribute('data-court-index'), 10);
+            gameScore.currentCourt = index;
+            saveGameScore();
+            genCourtHtml(courtData);
+            genControlHtml();
+            showGameScore();
+            createCourtSelector();
+        });
+    }
+}
+
 
 
 export { startNewGame, loadGameScore };
