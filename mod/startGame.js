@@ -257,15 +257,22 @@ function showGameScore() {
 
     let scoreList = document.createElement('ul');
     scoreList.className = 'scoreList';
+    let position = 1;
     scores.forEach(s => {
         let li = document.createElement('li');
-        li.textContent = `${s.name}: ${s.score}`;
+        li.textContent = `#${position}. ${s.name}: ${s.score}`;
         scoreList.appendChild(li);
+        position++;
     });
     gameScoreHtml.appendChild(scoreList);
     let hero = document.querySelector('.hero');
     let body = document.querySelector('body');
     body.insertBefore(gameScoreHtml, hero);
+
+    window.setTimeout(function() {
+        gameScoreHtml.remove();
+    }, 5000);
+
 
 };
 
