@@ -2,17 +2,13 @@
   margin: 0;
   overflow-x: hidden;
   overflow-y: visible;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 main {
-  background-color: #F9FAF9;
+  background-color: #f9faf9;
 }
 
 header {
@@ -27,15 +23,14 @@ header {
   max-height: fit-content;
   text-align: center;
 }
-.hero h2{
+.hero h2 {
   color: white;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
   font-size: 3rem;
-
 }
-.hero p{
+.hero p {
   color: white;
   font-size: 1.5rem;
   padding-top: 5px;
@@ -68,8 +63,6 @@ header {
   color: white;
   border: none;
   cursor: pointer;
-
-
 }
 
 .loadGame {
@@ -86,7 +79,6 @@ header {
   color: white;
   border: none;
   cursor: pointer;
-
 }
 
 .nameForm input {
@@ -110,6 +102,7 @@ header {
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 20px;
+  padding-bottom: 120px;
 }
 
 .playerScoreSection {
@@ -121,7 +114,7 @@ header {
   margin: 0 5px 30px 5px;
 }
 
-.playerLabel{
+.playerLabel {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
@@ -187,57 +180,134 @@ header {
   display: none;
 }
 
-footer{
+footer {
   min-height: 20vh;
 }
 
-.courtSelector{
+.courtSelector {
   width: 100vw;
   position: fixed;
-  bottom: 0;
+  bottom: 80px;
+  left: 0;
+  background: #f8f9fa;
+  padding: 15px 0px;
+  padding-right: 15px !important;
+  border-top: 2px solid #dee2e6;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  z-index: 1000;
 }
-.courtSelector .courtBtn{
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: gray;
-  border: none;
+.courtSelector .courtBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #6c757d;
+  border: 2px solid #adb5bd;
   cursor: pointer;
-  margin: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.played{
-  background-color: #008854 !important;
+.courtSelector .courtBtn:hover {
+  transform: translateY(-2px);
+  background: #5a6268;
 }
-.uncomplete{
-  background-color: #ff9800 !important;
+.courtSelector .courtBtn:active {
+  transform: translateY(0);
+  background: #495057;
 }
-.currentCourt{
-  background-color: #2196f3 !important;
-  width: 50px;
-  height: 50px;
+.played {
+  background: #28a745 !important;
+  border-color: #1e7e34 !important;
+}
+.uncomplete {
+  background: #fd7e14 !important;
+  border-color: #e55a00 !important;
+}
+.currentCourt {
+  background: #007bff !important;
+  border-color: #004085 !important;
+  width: 56px !important;
+  height: 56px !important;
+  transform: scale(1.1);
+  border-width: 3px !important;
 }
 
-.gameScoreHtml{
-  background-color:  #008854;
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  background: #343a40;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 2px solid #495057;
+  z-index: 1001;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  min-width: 50px;
+  height: 60px;
+  flex: 1;
+  max-width: 70px;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navItem:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navItem .material-symbols-outlined {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.navItem p {
+  font-size: 10px;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 500;
+  text-align: center;
+}
+
+.gameScoreHtml {
+  background-color: #008854;
   color: white;
   font-size: 2rem;
   padding: 10px 20px;
   overflow: hidden;
-
 }
-.gameScoreHtml .scoreList{
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 10px 0;
-
-    
+.gameScoreHtml .scoreList {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 0;
 }
-.gameScoreHtml .scoreList li{
+.gameScoreHtml .scoreList li {
   min-width: fit-content;
-
 }
-
 
 @keyframes scroll {
   0% {
