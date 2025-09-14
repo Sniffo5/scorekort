@@ -1,6 +1,7 @@
 import { courtData } from "../main.js";
 
 let gameScore = {};
+let courtStatus = [];
 
 function saveGameScore() {
   localStorage.setItem("currentGame", JSON.stringify(gameScore));
@@ -15,6 +16,7 @@ function loadGameScore() {
     document.querySelector(".hero").innerHTML = "";
     genCourtHtml(courtData);
     genControlHtml();
+    createCourtSelector();
   }
 }
 
@@ -45,6 +47,8 @@ function startNewGame(players) {
 
 function genCourtHtml(courtData) {
   let mainContent = document.querySelector(".mainContent");
+  let footer = document.querySelector("footer");
+  footer.style.minHeight = "20vh";
   let hero = document.querySelector(".hero");
   mainContent.innerHTML = "";
   hero.innerHTML = "";
@@ -200,7 +204,7 @@ function genControlHtml() {
   nextCourtIcon.className = "nextCourtIcon material-symbols-outlined";
   nextCourtDiv.appendChild(nextCourtIcon);
   let nextCourtText = document.createElement("p");
-  nextCourtText.textContent = "Next"; 
+  nextCourtText.textContent = "Nästa";
   nextCourtDiv.appendChild(nextCourtText);
 
   let previousCourtDiv = document.createElement("div");
@@ -211,7 +215,7 @@ function genControlHtml() {
   previousCourtIcon.className = "previousCourtIcon material-symbols-outlined";
   previousCourtDiv.appendChild(previousCourtIcon);
   let previousCourtText = document.createElement("p");
-  previousCourtText.textContent = "Prev"; 
+  previousCourtText.textContent = "Förra";
   previousCourtDiv.appendChild(previousCourtText);
 
   navigation.insertBefore(previousCourtDiv, navRules);
@@ -267,6 +271,31 @@ function showGameScore() {
   let gameScoreHtml = document.createElement("div");
   gameScoreHtml.className = "gameScoreHtml";
 
+  const courtStatus = JSON.parse(localStorage.getItem("courtStatus"));
+
+  let uncompletePlayers = [];
+  let uncompleteHoles = [];
+  let finishedPlayers = [];
+
+  for (let i = 0; i < courtStatus.length; i++) {
+    let temp;
+    if (courtStatus[i] == 0) {
+      uncompleteHoles.push(i);
+    }
+    if (courtStatus[i] == 1) {
+      for (let player in gameScore) {
+        if (player !== "currentCourt" && gameScore[player].scores[i] != 0) {
+          finishedPlayers.push(player.name);
+        } else if (
+          player !== "currentCourt" &&
+          gameScore[player].scores[i] == 0
+        ) {
+          uncompletePlayers.push(player);
+        }
+      }
+    }
+  }
+
   let scores = [];
   for (let player in gameScore) {
     if (player !== "currentCourt") {
@@ -279,7 +308,9 @@ function showGameScore() {
         )
           score += Number(gameScore[player].scores[i]);
       }
-      scores.push({ name: player, score: score });
+      if (!uncompletePlayers.includes(player)) {
+        scores.push({ name: player, score: score });
+      }
     }
   }
   scores.sort((a, b) => a.score - b.score);
@@ -298,7 +329,7 @@ function showGameScore() {
   let body = document.querySelector("body");
   body.insertBefore(gameScoreHtml, hero);
 
-   scoreList.scrollLeft = 0; 
+  scoreList.scrollLeft = 0;
 
   initScoreScroll();
 
@@ -328,11 +359,15 @@ function createCourtSelector() {
       }
     }
 
+    courtStatus[i] = 0;
+
     if (playersOnCourt > 0 && playersOnCourt < playerCount) {
       courtBtn.classList.add("uncomplete");
+      courtStatus[i] = 1;
     }
     if (playersOnCourt === playerCount) {
       courtBtn.classList.add("played");
+      courtStatus[i] = 2;
     }
 
     courtBtn.setAttribute("data-court-index", i);
@@ -341,6 +376,8 @@ function createCourtSelector() {
       courtBtn.classList.add("currentCourt");
     }
     courtSelector.appendChild(courtBtn);
+
+    localStorage.setItem("courtStatus", JSON.stringify(courtStatus));
 
     courtBtn.addEventListener("click", function () {
       let index = parseInt(courtBtn.getAttribute("data-court-index"), 10);
@@ -358,7 +395,9 @@ function initScoreScroll() {
   const scoreList = document.querySelector(".scoreList");
   if (!scoreList) return;
 
-  scoreList.innerHTML += scoreList.innerHTML;
+  if (scoreList.children.length >= 3) {
+    scoreList.innerHTML += scoreList.innerHTML;
+  }
 
   let scrollInterval;
   let isUserScrolling = false;
@@ -367,16 +406,28 @@ function initScoreScroll() {
     if (scrollInterval) {
       clearInterval(scrollInterval);
     }
-    scrollInterval = setInterval(function () {
-      
+    if (scoreList.children.length >= 3) {
+      scrollInterval = setInterval(function () {
+        if (!isUserScrolling) {
+          if (scoreList.scrollLeft >= scoreList.scrollWidth / 2) {
+            scoreList.scrollLeft = 0;
+          } else {
+            scoreList.scrollLeft += 2;
+          }
+        }
+      }, 30);
+    }
+    else{
+         scrollInterval = setInterval(function () {
       if (!isUserScrolling) {
-        if (scoreList.scrollLeft >= scoreList.scrollWidth / 2) {
+        if (scoreList.scrollLeft >= scoreList.scrollWidth) {
           scoreList.scrollLeft = 0;
         } else {
           scoreList.scrollLeft += 2;
         }
       }
     }, 30);
+    }
   }
 
   function pauseAutoScroll() {
@@ -397,7 +448,7 @@ function initScoreScroll() {
   scoreList.addEventListener("touchstart", pauseAutoScroll);
   scoreList.addEventListener("touchend", resumeAutoScroll);
 
-   setTimeout(startAutoScroll, 1000);
+  setTimeout(startAutoScroll, 1000);
 }
 
 export { startNewGame, loadGameScore };

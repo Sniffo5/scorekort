@@ -22,7 +22,7 @@ function generateStartHtml() {
     const firstPlayerId = 'player1';
     input.addEventListener('input', function (event) {
         const playerName = event.target.value;
-        generateHeroHtml(firstPlayerId, playerName);
+        /* generateHeroHtml(firstPlayerId, playerName); */
     });
     input.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
@@ -69,7 +69,7 @@ function generateStartHtml() {
         input.addEventListener('input', function (event) {
             event.preventDefault();
             const playerName = event.target.value;
-            generateHeroHtml(nextPlayerId, playerName);
+            /* generateHeroHtml(nextPlayerId, playerName); */
         });
 
         input.addEventListener('keydown', function (event) {
@@ -127,7 +127,7 @@ function generateStartHtml() {
     });
 }
 
-function generateHeroHtml(playerId, playerName) {
+/* function generateHeroHtml(playerId, playerName) {
 
     let hero = document.querySelector('.hero');
     let playerDiv = document.getElementById(playerId);
@@ -153,7 +153,7 @@ function generateHeroHtml(playerId, playerName) {
             hero.appendChild(playerDiv);
         }
     }
-}
+} */
 
 
 
