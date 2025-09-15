@@ -143,13 +143,27 @@ navScore.addEventListener("click", function () {
   mainContent.append(resultsHtml);
 });
 
-let navRules = document.querySelector("#navRules");
+const navRules = document.querySelector("#navRules");
+const rulesHtml = document.querySelector(".rules");
+const closeRules = document.querySelector(".closeRules");
 
-/* navRules.addEventListener("click", function () {
+navRules.addEventListener("click", function (e) {
+  e.stopPropagation();
+  if (!rulesHtml) return;
+  rulesHtml.classList.toggle("hidden");
+});
 
-    let rulesHtml = document.querySelector(".rules");
-    rulesHtml.classList.toggle("hidden");
+closeRules.addEventListener("click", function (e) {
+  e.stopPropagation();
+  if (!rulesHtml) return;
+  rulesHtml.classList.add("hidden");
+});
 
-}); */
+document.addEventListener("click", function (e) {
+  if (!rulesHtml) return;
+  if (!rulesHtml.classList.contains("hidden") && !rulesHtml.contains(e.target) && !navRules.contains(e.target)) {
+    rulesHtml.classList.add("hidden");
+  }
+});
 
 export { courtData };

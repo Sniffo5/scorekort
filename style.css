@@ -442,11 +442,12 @@ header {
   order: 2;
   align-self: flex-start;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 10px;
   background: #ffd700;
   border-color: #ff9800;
   color: #333;
   font-size: 1.1em;
+
 }
 
 .secondPlace {
@@ -455,6 +456,9 @@ header {
   background: #c0c0c0;
   border-color: #757575;
   color: #333;
+  max-width: 35%;
+  max-height: 10vh;
+  margin-left: 5px;
 }
 
 .thirdPlace {
@@ -516,7 +520,30 @@ header {
 .rules{
   position: absolute;
   background-color:#f9faf9;
-  border: 3px solid #006b42;
-  width: 90%;
-  height: fit-content;
+  border: 5px solid #006b42;
+  width: 95vw;
+  min-height: 50vh;
+  max-height: fit-content;
+  top: 10px;
+  margin: 0;
+  margin-left: 1.25vw;
+  font-size: 1.5rem;
+}
+.rules ul{
+  padding: 20px;
+}
+.rules span{
+  position: fixed;
+  top: 22.5px;
+  right: 20px;
+  font-size: 3.5rem;
+  cursor: pointer;
+}
+.rulesTitle{
+  text-align: center;
+  font-size: 3rem;
+}
+
+span{
+  overflow: hidden;
 }
